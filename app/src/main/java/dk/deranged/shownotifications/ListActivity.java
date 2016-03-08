@@ -44,6 +44,8 @@ public class ListActivity extends ActionBarActivity {
 
         Log.d("shownotifications", "starting reg id setup");
 
+        final Intent registerServiceIntent = new Intent(this, RegistrationIntentService.class);
+
         //Listen for reg id registration response
         BroadcastReceiver registrationDoneNoticeReceiver = new BroadcastReceiver() {
             @Override
@@ -54,7 +56,7 @@ public class ListActivity extends ActionBarActivity {
                 if(registrationId == null) {
                     Log.d("shownotifications", "no token");
                     Toast.makeText(context, "Failed to load registration ID.", Toast.LENGTH_LONG).show();
-                    //TODO: Retry
+                    startService(registerServiceIntent);
                     return;
                 }
                 Log.d("shownotifications", "token good " + registrationId);
@@ -69,7 +71,6 @@ public class ListActivity extends ActionBarActivity {
         Log.d("shownotifications", "starting registration intent service");
 
         //Register reg id
-        Intent registerServiceIntent = new Intent(this, RegistrationIntentService.class);
         startService(registerServiceIntent);
 
         //Listen for new notification
