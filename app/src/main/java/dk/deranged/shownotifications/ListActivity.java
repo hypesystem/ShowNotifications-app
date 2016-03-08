@@ -16,12 +16,15 @@ import android.content.ClipboardManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ListActivity extends ActionBarActivity {
@@ -47,6 +50,14 @@ public class ListActivity extends ActionBarActivity {
             public void onReceive(Context context, Intent intent) {
                 Log.d("shownotifications", "did receive new notification notice");
                 refreshNotificationList(sharedPreferences, listView);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                JSONObject item = (JSONObject) listView.getItemAtPosition(position);
+                Log.d("shownotifications", "Clicked " + item);
             }
         });
     }
