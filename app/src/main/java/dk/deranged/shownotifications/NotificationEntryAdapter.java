@@ -92,7 +92,7 @@ public class NotificationEntryAdapter implements ListAdapter {
 
     public JSONObject getItem(int position) {
         try {
-            return notifications.getJSONObject(position);
+            return notifications.getJSONObject(notifications.length() - 1 - position);
         }
         catch(JSONException e) {
             Log.e("shownotifications", "Failed to get item " + position + " from notifications: " + notifications);
