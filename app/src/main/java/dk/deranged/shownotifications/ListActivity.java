@@ -41,7 +41,34 @@ public class ListActivity extends ActionBarActivity {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         refreshNotificationList(sharedPreferences, listView);
+        createRegistrationId();
 
+        //Listen for new notification
+        Log.d("shownotifications", "starting new notification registration setup");
+
+        BroadcastReceiver newNotificationNoticeReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("shownotifications", "did receive new notification notice");
+                refreshNotificationList(sharedPreferences, listView);
+            }
+        };
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(newNotificationNoticeReceiver, new IntentFilter("dk.deranged.shownotifications.new_notification_registered"));
+    }
+
+    private void refreshNotificationList(SharedPreferences sharedPreferences, ListView listView) {
+        try {
+            JSONArray allNotifications = new JSONArray(sharedPreferences.getString("dk.deranged.shownotifications.all_notifications", "[]"));
+            NotificationEntryAdapter adapter = new NotificationEntryAdapter(this, allNotifications);
+            listView.setAdapter(adapter);
+        }
+        catch(JSONException e) {
+            Log.e("shownotifications", "Failed to load saved notifications" + e);
+        }
+    }
+
+    private void createRegistrationId() {
         Log.d("shownotifications", "starting reg id setup");
 
         final Intent registerServiceIntent = new Intent(this, RegistrationIntentService.class);
@@ -69,30 +96,6 @@ public class ListActivity extends ActionBarActivity {
 
         //Register reg id
         startService(registerServiceIntent);
-
-        //Listen for new notification
-        Log.d("shownotifications", "starting new notification registration setup");
-
-        BroadcastReceiver newNotificationNoticeReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d("shownotifications", "did receive new notification notice");
-                refreshNotificationList(sharedPreferences, listView);
-            }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(newNotificationNoticeReceiver, new IntentFilter("dk.deranged.shownotifications.new_notification_registered"));
-    }
-
-    private void refreshNotificationList(SharedPreferences sharedPreferences, ListView listView) {
-        try {
-            JSONArray allNotifications = new JSONArray(sharedPreferences.getString("dk.deranged.shownotifications.all_notifications", "[]"));
-            NotificationEntryAdapter adapter = new NotificationEntryAdapter(this, allNotifications);
-            listView.setAdapter(adapter);
-        }
-        catch(JSONException e) {
-            Log.e("shownotifications", "Failed to load saved notifications" + e);
-        }
     }
 
     @Override
