@@ -72,14 +72,13 @@ public class ListActivity extends ActionBarActivity {
 
         final Intent registerServiceIntent = new Intent(this, RegistrationIntentService.class);
 
-        //Listen for reg id registration response
-        BroadcastReceiver registrationDoneNoticeReceiver = new BroadcastReceiver() {
+        handleRegistrationFinished(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.d("shownotifications", "did receive registration id ready notification");
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                 String registrationId = sharedPreferences.getString("dk.deranged.shownotifications.this_app_registration_id", null);
-                if(registrationId == null) {
+                if (registrationId == null) {
                     Log.d("shownotifications", "no token");
                     startService(registerServiceIntent);
                     return;
@@ -87,14 +86,15 @@ public class ListActivity extends ActionBarActivity {
                 Log.d("shownotifications", "token good " + registrationId);
                 _regId = registrationId;
             }
-        };
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(registrationDoneNoticeReceiver, new IntentFilter("dk.deranged.shownotifications.registration_finished"));
-
-        Log.d("shownotifications", "starting registration intent service");
+        });
 
         //Register reg id
+        Log.d("shownotifications", "starting registration intent service");
         startService(registerServiceIntent);
+    }
+
+    private void handleRegistrationFinished(BroadcastReceiver registrationDoneNoticeReceiver) {
+        LocalBroadcastManager.getInstance(this).registerReceiver(registrationDoneNoticeReceiver, new IntentFilter("dk.deranged.shownotifications.registration_finished"));
     }
 
     @Override
