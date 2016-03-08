@@ -55,14 +55,11 @@ public class ListActivity extends ActionBarActivity {
                 String registrationId = sharedPreferences.getString("dk.deranged.shownotifications.this_app_registration_id", null);
                 if(registrationId == null) {
                     Log.d("shownotifications", "no token");
-                    Toast.makeText(context, "Failed to load registration ID.", Toast.LENGTH_LONG).show();
                     startService(registerServiceIntent);
                     return;
                 }
                 Log.d("shownotifications", "token good " + registrationId);
                 _regId = registrationId;
-
-                Toast.makeText(context, "Registraton ID ready!", Toast.LENGTH_LONG).show();
             }
         };
 
