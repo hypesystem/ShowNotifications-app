@@ -42,18 +42,17 @@ public class ListActivity extends ActionBarActivity {
 
         refreshNotificationList(sharedPreferences, listView);
         createRegistrationId();
-
-        //Listen for new notification
-        Log.d("shownotifications", "starting new notification registration setup");
-
-        BroadcastReceiver newNotificationNoticeReceiver = new BroadcastReceiver() {
+        handleNewNotifications(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.d("shownotifications", "did receive new notification notice");
                 refreshNotificationList(sharedPreferences, listView);
             }
-        };
+        });
+    }
 
+    private void handleNewNotifications(BroadcastReceiver newNotificationNoticeReceiver) {
+        Log.d("shownotifications", "starting new notification registration setup");
         LocalBroadcastManager.getInstance(this).registerReceiver(newNotificationNoticeReceiver, new IntentFilter("dk.deranged.shownotifications.new_notification_registered"));
     }
 
