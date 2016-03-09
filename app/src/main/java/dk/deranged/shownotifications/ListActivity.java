@@ -59,6 +59,7 @@ public class ListActivity extends ActionBarActivity {
                 JSONObject item = (JSONObject) listView.getItemAtPosition(position);
                 Log.d("shownotifications", "Going to view details for " + item);
                 Intent viewDetailsIntent = new Intent(getApplicationContext(), NotificationDetailsActivity.class);
+                viewDetailsIntent.putExtra("dk.deranged.shownotifications.notification_detail", item.toString());
                 startActivity(viewDetailsIntent);
             }
         });

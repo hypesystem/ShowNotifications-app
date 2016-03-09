@@ -43,6 +43,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
     }
 
     private JSONObject readBundleToJson(Bundle data) throws JSONException {
+        //TODO: Support other data types. Like numbers, booleans, arrays.
         JSONObject thisNotification = new JSONObject();
         for(String key : data.keySet()) {
             Bundle innerBundle = data.getBundle(key);
