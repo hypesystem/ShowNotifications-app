@@ -52,7 +52,9 @@
         </service>
         <service
             android:name=".RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
+
+        <activity android:name=".NotificationDetailsActivity"></activity>
     </application>
 
 </manifest>

@@ -57,7 +57,9 @@ public class ListActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 JSONObject item = (JSONObject) listView.getItemAtPosition(position);
-                Log.d("shownotifications", "Clicked " + item);
+                Log.d("shownotifications", "Going to view details for " + item);
+                Intent viewDetailsIntent = new Intent(getApplicationContext(), NotificationDetailsActivity.class);
+                startActivity(viewDetailsIntent);
             }
         });
     }
