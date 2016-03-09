@@ -26,6 +26,8 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             //TODO: Replace saving as JSON with saving in database
 
             JSONObject thisNotification = readBundleToJson(data);
+            //TODO: Better way to save date, so it doesn't overwrite existing fields.
+            //      right now it looks like it is one of the fields received from the server and it isn't.
             thisNotification.put("date", new Date().toString());
 
             JSONArray allNotifications = new JSONArray(sharedPreferences.getString("dk.deranged.shownotifications.all_notifications", "[]"));
