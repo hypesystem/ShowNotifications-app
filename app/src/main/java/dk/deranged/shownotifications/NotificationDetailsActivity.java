@@ -50,8 +50,6 @@ public class NotificationDetailsActivity extends ActionBarActivity {
     }
 
     private void setUpViewFromJson(LinearLayout container, JSONObject detail) throws JSONException {
-        //TODO: Support other data types. Like numbers, booleans, arrays.
-
         Iterator<String> keys = detail.keys();
         while(keys.hasNext()) {
             String key = keys.next();
