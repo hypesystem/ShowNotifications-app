@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -40,7 +41,8 @@ public class NotificationDetailsActivity extends ActionBarActivity {
             setUpViewFromJson(container, payload);
         }
         catch(JSONException e) {
-            //TODO:
+            Log.e("pooetry", "Failed to render details view " + e);
+            finish();
         }
 
         ActionBar actionBar = getSupportActionBar();
