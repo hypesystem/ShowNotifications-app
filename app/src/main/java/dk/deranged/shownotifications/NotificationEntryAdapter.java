@@ -19,7 +19,7 @@ import java.util.Iterator;
 public class NotificationEntryAdapter implements ListAdapter {
     private Context context;
     private JSONArray notifications;
-    private String[] nonDataKeys = { "date", "collapse_key", "notification" };
+    private String[] nonDataKeys = { "collapse_key", "notification" };
 
     public NotificationEntryAdapter(Context context, JSONArray notifications) {
         this.context = context;
@@ -42,10 +42,11 @@ public class NotificationEntryAdapter implements ListAdapter {
         try {
             JSONObject o = notifications.getJSONObject(notifications.length() - 1 - position);
             String dateString = o.getString("date");
-            boolean hasNotification = o.has("notification");
+            JSONObject payload = o.getJSONObject("payload");
+            boolean hasNotification = payload.has("notification");
             boolean hasData = false;
 
-            Iterator<String> keys = o.keys();
+            Iterator<String> keys = payload.keys();
             while(keys.hasNext()) {
                 String key = keys.next();
                 Log.d("shownotifications", "Found key " + key);
