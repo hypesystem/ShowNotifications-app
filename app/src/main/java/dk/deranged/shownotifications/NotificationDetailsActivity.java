@@ -26,8 +26,18 @@ public class NotificationDetailsActivity extends ActionBarActivity {
         LinearLayout container = (LinearLayout) findViewById(R.id.notification_detail_container);
 
         try {
-            JSONObject detail = new JSONObject(getIntent().getExtras().getString("dk.deranged.shownotifications.notification_detail"));
-            setUpViewFromJson(container, detail);
+            JSONObject data = new JSONObject(getIntent().getExtras().getString("dk.deranged.shownotifications.notification_detail"));
+            String date = data.getString("date");
+
+            TextView dateView = new TextView(this);
+            dateView.setText(date);
+            dateView.setTextSize(18);
+            dateView.setTypeface(null, Typeface.BOLD);
+            dateView.setPadding(0, 0, 0, 20);
+            container.addView(dateView);
+
+            JSONObject payload = data.getJSONObject("payload");
+            setUpViewFromJson(container, payload);
         }
         catch(JSONException e) {
             //TODO:
