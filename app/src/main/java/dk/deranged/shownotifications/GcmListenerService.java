@@ -51,10 +51,9 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             Bundle innerBundle = data.getBundle(key);
             if(innerBundle != null) {
                 thisNotification.put(key, readBundleToJson(innerBundle));
+                continue;
             }
-            else {
-                thisNotification.put(key, data.getString(key));
-            }
+            thisNotification.put(key, data.getString(key));
         }
         return thisNotification;
     }
